@@ -49,3 +49,7 @@ func (l LinkedList) String() string {
 	buf.WriteString("]")
 	return buf.String()
 }
+
+func (l LinkedList) Length() int {
+	return l.length
+}
