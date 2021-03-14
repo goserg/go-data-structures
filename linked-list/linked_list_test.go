@@ -33,3 +33,14 @@ func TestLinkedList_InsertFirst(t *testing.T) {
 		t.Errorf(`Insetring 10, "20", [50, 30]: got %s, want %s`, got, want)
 	}
 }
+
+func TestLinkedList_Length(t *testing.T) {
+	ll := LinkedList{}
+	if ll.Length() != 0 {
+		t.Errorf("Length of empty LinkedList should be 0, got %d", ll.Length())
+	}
+	ll.InsertFirst(1)
+	if ll.Length() != 1 {
+		t.Errorf("Length of LinkedList should be 1, got %d", ll.Length())
+	}
+}
