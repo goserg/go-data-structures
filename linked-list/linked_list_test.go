@@ -22,11 +22,11 @@ func TestNewLinkedList(t *testing.T) {
 func TestLinkedList_InsertFirst(t *testing.T) {
 	ll := LinkedList{}
 	ll.InsertFirst(10)
-	ll.InsertFirst(20)
+	ll.InsertFirst("20")
 	ll.InsertFirst(30)
 	got := ll.String()
-	want := "[30, 20, 10]"
+	want := `[30, "20", 10]`
 	if got != want {
-		t.Errorf("Insetring 10, 20, 30: got %s, want %s", got, want)
+		t.Errorf(`Insetring 10, "20", 30: got %s, want %s`, got, want)
 	}
 }

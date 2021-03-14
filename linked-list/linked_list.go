@@ -34,7 +34,13 @@ func (l LinkedList) String() string {
 	buf := bytes.Buffer{}
 	buf.WriteString("[")
 	for l.head != nil {
-		buf.WriteString(fmt.Sprint(l.head.value))
+		val := l.head.value
+		_, ok := val.(string)
+		if ok {
+			buf.WriteString(fmt.Sprint(`"`, val, `"`))
+		} else {
+			buf.WriteString(fmt.Sprint(val))
+		}
 		l.head = l.head.next
 		if l.head != nil {
 			buf.WriteString(", ")
