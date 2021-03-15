@@ -1,6 +1,7 @@
 package linked_list
 
 import (
+	"errors"
 	"fmt"
 	"testing"
 )
@@ -43,4 +44,33 @@ func TestLinkedList_Length(t *testing.T) {
 	if ll.Length() != 1 {
 		t.Errorf("Length of LinkedList should be 1, got %d", ll.Length())
 	}
+}
+
+func TestLinkedList_Get(t *testing.T) {
+	ll := LinkedList{}
+	ll.InsertFirst(1)
+	ll.InsertFirst(2)
+	ll.InsertFirst(3)
+
+	testCases := []struct {
+		i   int
+		exp interface{}
+		err error
+	}{
+		{i: 0, exp: 3, err: nil},
+		{i: 1, exp: 2, err: nil},
+		{i: 2, exp: 1, err: nil},
+		{i: 3, exp: nil, err: errors.New("invalid index: 3")},
+		{i: -1, exp: nil, err: errors.New("invalid index: -1")},
+	}
+	for _, testCase := range testCases {
+		val, err := ll.Get(testCase.i)
+		if err != nil && err.Error() != testCase.err.Error() {
+			t.Errorf("expected error %v, got %v", err, testCase.err)
+		}
+		if val != testCase.exp {
+			t.Errorf("expectex %v, got %v", val, testCase.exp)
+		}
+	}
+
 }
