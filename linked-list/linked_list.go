@@ -2,6 +2,7 @@ package linked_list
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 )
 
@@ -28,6 +29,20 @@ func (l *LinkedList) InsertFirst(i interface{}) {
 	}
 	l.head = &newNode
 	l.length++
+}
+
+// Get принимает int индекс, возвращает value из списка под этим индексом.
+//При некорректном индексе возвращает nil и ошибку.
+func (l LinkedList) Get(i int) (interface{}, error) {
+	if i < 0 || i >= l.length {
+		return nil, errors.New(fmt.Sprintf("invalid index: %d", i))
+	}
+	current := l.head
+	for i > 0 {
+		i--
+		current = current.next
+	}
+	return current.value, nil
 }
 
 func (l LinkedList) String() string {
