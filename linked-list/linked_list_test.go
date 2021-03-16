@@ -89,5 +89,37 @@ func TestFromList(t *testing.T) {
 	}
 	if ll2.String() != "[1, 2, 3]" {
 		t.Errorf("Expected [1, 2, 3], got %s", ll2.String())
+  }
+}
+
+func TestLinkedList_Pop(t *testing.T) {
+	ll := LinkedList{}
+	ll.InsertFirst(1)
+	ll.InsertFirst(2)
+	ll.InsertFirst(3)
+
+	testCases := []struct {
+		i   int
+		exp interface{}
+		err error
+	}{
+		{i: 1, exp: 2, err: nil},
+		{i: 2, exp: nil, err: errors.New("invalid index: 2")},
+		{i: -1, exp: nil, err: errors.New("invalid index: -1")},
+	}
+	for _, testCase := range testCases {
+		val, err := ll.Pop(testCase.i)
+		if err != nil && err.Error() != testCase.err.Error() {
+			t.Errorf("expected error %v, got %v", err, testCase.err)
+		}
+		if val != testCase.exp {
+			t.Errorf("expectex %v, got %v", val, testCase.exp)
+		}
+	}
+	if ll.String() != "[3, 1]" {
+		t.Errorf("Linked lisr expected to be [3, 1], got %s", ll.String())
+	}
+	if ll.length != 2 {
+		t.Errorf("Expected list length: 2; got: %d", ll.length)
 	}
 }

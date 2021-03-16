@@ -61,6 +61,22 @@ func FromList(list interface{}) (*LinkedList, error) {
 	}
 	return &ll, nil
 }
+  
+func (l *LinkedList) Pop(i int) (interface{}, error) {
+	if i < 0 || i >= l.length {
+		return nil, errors.New(fmt.Sprintf("invalid index: %d", i))
+	}
+	current := l.head
+	last := current
+	for i > 0 {
+		i--
+		last = current
+		current = current.next
+	}
+	last.next = current.next
+	l.length--
+	return current.value, nil
+}
 
 func (l LinkedList) String() string {
 	buf := bytes.Buffer{}
