@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"reflect"
 )
 
 type node struct {
@@ -31,7 +32,7 @@ func (l *LinkedList) InsertFirst(i interface{}) {
 	l.length++
 }
 
-// Get принимает int индекс, возвращает value из списка под этим индексом.
+//Get принимает int индекс, возвращает value из списка под этим индексом.
 //При некорректном индексе возвращает nil и ошибку.
 func (l LinkedList) Get(i int) (interface{}, error) {
 	if i < 0 || i >= l.length {
@@ -43,6 +44,22 @@ func (l LinkedList) Get(i int) (interface{}, error) {
 		current = current.next
 	}
 	return current.value, nil
+}
+
+//FromList генерирует Linked List из слийса или массива.
+//Возвращает ошибку, если в аргумент подан неверный тип.
+func FromList(list interface{}) (*LinkedList, error) {
+	var ll LinkedList
+	switch reflect.TypeOf(list).Kind() {
+	case reflect.Slice, reflect.Array:
+		s := reflect.ValueOf(list)
+		for i := s.Len() - 1; i >= 0; i-- {
+			ll.InsertFirst(s.Index(i))
+		}
+	default:
+		return nil, errors.New("can generate list only from slices or arrays")
+	}
+	return &ll, nil
 }
 
 func (l LinkedList) String() string {
