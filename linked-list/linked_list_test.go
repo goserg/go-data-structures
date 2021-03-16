@@ -74,3 +74,20 @@ func TestLinkedList_Get(t *testing.T) {
 	}
 
 }
+
+func TestFromList(t *testing.T) {
+	ll, err := FromList([]int{1, 2, 3})
+	if err != nil {
+		t.Errorf("Expected no error, got %v", err)
+	}
+	if ll.String() != "[1, 2, 3]" {
+		t.Errorf("Expected [1, 2, 3], got %s", ll.String())
+	}
+	ll2, err := FromList([3]int{1, 2, 3})
+	if err != nil {
+		t.Errorf("Expected no error, got %v", err)
+	}
+	if ll2.String() != "[1, 2, 3]" {
+		t.Errorf("Expected [1, 2, 3], got %s", ll2.String())
+	}
+}
