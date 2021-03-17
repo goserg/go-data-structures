@@ -61,7 +61,7 @@ func FromList(list interface{}) (*LinkedList, error) {
 	}
 	return &ll, nil
 }
-  
+
 func (l *LinkedList) Pop(i int) (interface{}, error) {
 	if i < 0 || i >= l.length {
 		return nil, errors.New(fmt.Sprintf("invalid index: %d", i))
@@ -100,4 +100,18 @@ func (l LinkedList) String() string {
 
 func (l LinkedList) Length() int {
 	return l.length
+}
+
+func (l LinkedList) ToSlice() []interface{} {
+	sl := make([]interface{}, 0, l.length)
+
+	current := l.head
+	i := 0
+	for current != nil {
+		sl = append(sl, current.value)
+		current = current.next
+		i++
+	}
+
+	return sl
 }
