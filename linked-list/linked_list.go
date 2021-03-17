@@ -1,3 +1,4 @@
+// Реализация Связного списка на языке Go
 package linked_list
 
 import (
@@ -12,17 +13,18 @@ type node struct {
 	value interface{}
 }
 
-//LinkedList - simple go data structure
 type LinkedList struct {
 	head   *node
 	length int
 }
 
+//NewLinkedList - простой конструктор
 func NewLinkedList() *LinkedList {
 	var ll LinkedList
 	return &ll
 }
 
+//InsertFirst вставляет элемент в начало списка.
 func (l *LinkedList) InsertFirst(i interface{}) {
 	newNode := node{
 		l.head,
@@ -62,6 +64,7 @@ func FromList(list interface{}) (*LinkedList, error) {
 	return &ll, nil
 }
 
+//Pop удаляет элемент под индексом i из списка. Возвращает удаленный элемент и ошибку.
 func (l *LinkedList) Pop(i int) (interface{}, error) {
 	if i < 0 || i >= l.length {
 		return nil, errors.New(fmt.Sprintf("invalid index: %d", i))
@@ -78,6 +81,7 @@ func (l *LinkedList) Pop(i int) (interface{}, error) {
 	return current.value, nil
 }
 
+//String реализация интерфейса fmt.Stringer.
 func (l LinkedList) String() string {
 	buf := bytes.Buffer{}
 	buf.WriteString("[")
@@ -98,10 +102,12 @@ func (l LinkedList) String() string {
 	return buf.String()
 }
 
+//Length возвращает длину списка.
 func (l LinkedList) Length() int {
 	return l.length
 }
 
+//ToSlice возвращает срез []interface{}, сгенерированный на основе списка.
 func (l LinkedList) ToSlice() []interface{} {
 	sl := make([]interface{}, 0, l.length)
 
