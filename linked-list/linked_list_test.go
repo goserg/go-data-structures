@@ -89,7 +89,10 @@ func TestFromList(t *testing.T) {
 	}
 	if ll2.String() != "[1, 2, 3]" {
 		t.Errorf("Expected [1, 2, 3], got %s", ll2.String())
-  }
+	}
+	if ll2.length != 3 {
+		t.Errorf("expected length: 3, got %d", ll2.length)
+	}
 }
 
 func TestLinkedList_Pop(t *testing.T) {
@@ -121,5 +124,20 @@ func TestLinkedList_Pop(t *testing.T) {
 	}
 	if ll.length != 2 {
 		t.Errorf("Expected list length: 2; got: %d", ll.length)
+	}
+}
+
+func TestLinkedList_ToSlice(t *testing.T) {
+	ll := LinkedList{}
+	ll.InsertFirst(1)
+	ll.InsertFirst(2)
+	ll.InsertFirst(3)
+
+	sl := ll.ToSlice()
+
+	expected := "[3 2 1]"
+
+	if fmt.Sprint(sl) != expected {
+		t.Errorf("expected %s, got %s", fmt.Sprint(sl), expected)
 	}
 }
